@@ -1,0 +1,18 @@
+package intface;
+
+public class ComLine {
+
+	public static void main(String abc[]) {
+
+
+		System.out.println(abc.length);
+
+		for(String str:abc) {
+
+		System.out.println("Value is "+str);
+
+		}	
+
+	}
+
+	} 

@@ -1,0 +1,77 @@
+package threading;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+class DigitalClock implements Runnable {
+    boolean running;
+    private DateTimeFormatter formatter;
+    
+    public DigitalClock() {
+        this.running = false;
+        this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    }
+    
+    public void start() {
+        this.running = true;
+        Thread clockThread = new Thread(this);
+        clockThread.start();
+    }
+    
+    public void stop() {
+        this.running = false;
+    }
+    
+    public String getCurrentTime() {
+        return LocalTime.now().format(formatter);
+    }
+    
+    @Override
+    public void run() {
+        System.out.println("Clock started!");
+        System.out.println("== == == == == == == == == == == ==");
+        
+        while (running) {
+            try {
+                System.out.print("\n" + "Current Time : " + getCurrentTime());
+                
+                Thread.sleep(1000);
+                
+            } catch (InterruptedException e) {
+                System.out.println("\n" + "Clock was interrupted!");
+                running = false;
+                break;
+            }
+        }
+        System.out.println("\n" + "Clock stopped!");
+    }
+}
+
+
+
+public class ques2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DigitalClock mainClock = new DigitalClock();
+        
+        System.out.println("=== Digital Clock Demo ===");
+        System.out.println("Current time: " + mainClock.getCurrentTime());
+        
+        mainClock.start();
+        while(mainClock.running) {
+        	try {
+        		Thread.sleep(1000);
+        	}
+        	catch(InterruptedException e) {
+        		mainClock.stop();
+        		break;
+        	}
+        	
+        }
+        
+        System.out.println("interrupted!");
+
+	}
+
+}

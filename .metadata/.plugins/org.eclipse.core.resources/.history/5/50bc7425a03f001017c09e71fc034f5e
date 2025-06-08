@@ -1,0 +1,13 @@
+package oops;
+
+public class CarTest {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Car c=new Car();
+		System.out.println(c.colour);
+		System.out.println(c.price);
+		System.out.println(c.wheel);
+	}
+
+}

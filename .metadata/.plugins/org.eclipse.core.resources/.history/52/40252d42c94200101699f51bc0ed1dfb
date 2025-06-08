@@ -1,0 +1,33 @@
+package multithreading;
+
+class Task implements Runnable{
+	public synchronized void run() {
+		String name =Thread.currentThread().getName();
+		System.out.println("hey");
+		for(int i=0;i<10;i++) {
+			try{
+				Thread.sleep(5);
+				System.out.println(name+""+i);
+				if(name.equals("Raj") && i==4){
+					wait();
+				}
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+		}
+	}
+}
+
+public class comm {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Task t=new Task();
+		new Thread(t,"Raj");
+		new Thread(t,"Ravi");
+		new Thread(t,"Ramesh");
+
+	}
+
+}

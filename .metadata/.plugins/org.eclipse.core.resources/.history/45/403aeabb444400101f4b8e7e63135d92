@@ -1,0 +1,102 @@
+package threading;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+// Clock class that implements Runnable for threading
+class DigitalClock implements Runnable {
+    private boolean running;
+    private DateTimeFormatter formatter;
+    
+    // Constructor
+    public DigitalClock(String name) {
+        this.running = false;
+        this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    }
+    
+    // Start the clock
+    public void start() {
+        this.running = true;
+        Thread clockThread = new Thread(this);
+        clockThread.start();
+    }
+    
+    // Stop the clock
+    public void stop() {
+        this.running = false;
+    }
+    
+    // Get current status
+    public boolean isRunning() {
+        return running;
+    }
+    
+    // Set custom time format
+    public void setTimeFormat(String pattern) {
+        this.formatter = DateTimeFormatter.ofPattern(pattern);
+    }
+    
+    // Get current time as formatted string
+    public String getCurrentTime() {
+        return LocalTime.now().format(formatter);
+    }
+    
+    // Thread execution method
+    @Override
+    public void run() {
+        System.out.println("Clock started!");
+        System.out.println("== == == == == == == == == == == ==");
+        
+        while (running) {
+            try {
+                // Clear previous line and display current time
+                System.out.print("\n" + "Current Time : " + getCurrentTime());
+                
+                Thread.sleep(1000);
+                
+            } catch (InterruptedException e) {
+                System.out.println("\n" + "Clock was interrupted!");
+                running = false;
+                break;
+            }
+        }
+        System.out.println("\n" + "Clock stopped!");
+    }
+}
+
+
+
+public class ques2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		DigitalClock mainClock = new DigitalClock("Main Digital Clock");
+        
+        // Demonstrate different time formats
+        System.out.println("=== Digital Clock Demo ===");
+        System.out.println("Current time: " + mainClock.getCurrentTime());
+        
+        // Change format to include AM/PM
+        mainClock.setTimeFormat("hh:mm:ss a");
+        System.out.println("12-hour format: " + mainClock.getCurrentTime());
+        
+        // Reset to 24-hour format
+        mainClock.setTimeFormat("HH:mm:ss");
+        
+        // Start the clock thread
+        mainClock.start();
+        
+        // Let it run for 10 seconds, then demonstrate clock manager
+        try {
+            Thread.sleep(20000);
+            mainClock.stop();
+            
+            System.out.println("\n\n=== Clock Manager Demo ===");
+            
+        } catch (InterruptedException e) {
+            System.out.println("Demo interrupted!");
+        }
+
+	}
+
+}

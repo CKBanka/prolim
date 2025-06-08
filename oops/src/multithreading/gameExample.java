@@ -1,0 +1,26 @@
+package multithreading;
+
+class Bike implements Runnable{
+	public void run() {
+		System.out.println(1);
+	}
+}
+public class gameExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Bike b1;
+		Thread t1;
+		Thread t[]=new Thread[5];
+		for (int i=1;i<6;i++) {
+			b1=new Bike();
+			t1=new Thread(b1);
+			t[i-1]=t1;
+		}
+		for(Thread i:t) {
+			i.start();
+		}
+
+	}
+
+}

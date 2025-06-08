@@ -1,0 +1,84 @@
+package threading;
+
+
+import java.util.Scanner;
+
+class Classroom{
+	private int question;
+	private boolean available;
+	public synchronized void askQuestion(int q) throws Exception {
+		while(available) {
+			wait();
+		}
+		question=q;
+		System.out.println("Student asks question : "+q);
+		available=true;
+		notify();
+	}
+	public synchronized void answerQuestion() throws Exception{
+		while(!available) {
+			wait();
+		}
+		System.out.println("Teacher answers : " + question);
+		available=false;
+		notify();
+		
+	}
+}
+class Student implements Runnable{
+ private Classroom c;
+ public Student(Classroom c) {
+	 this.c=c;
+ }
+ public void start() {
+	 Thread t = new Thread(this);
+     t.start();
+ }
+ public void run() {
+	 try {
+		 for(int i=1;i<=10;i++) {
+			 c.askQuestion(i);
+		 }
+	 }
+	 catch(Exception e){
+		 
+	 }
+ }
+}
+
+
+//Teacher class that waits for questions and provides answers
+class Teacher implements Runnable{
+ private Classroom c;
+ public Teacher(Classroom c) {
+	 this.c=c;
+ }
+ public void start() {
+	 Thread t = new Thread(this);
+     t.start();
+ }
+ public void run() {
+	 try {
+		 for(int i=1;i<=10;i++) {
+    		 c.answerQuestion(); 
+    	 } 
+     }
+	 catch(Exception e) {
+		 
+	 }
+}
+
+
+public class ques4 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Classroom c=new Classroom();
+		Student s=new Student(c);
+		Teacher t=new Teacher(c);
+		s.start();
+		t.start();
+
+	}
+
+}

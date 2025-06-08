@@ -1,0 +1,21 @@
+package mywish;
+
+public class Datatype {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		byte a=1;
+		int b=3;
+		long c=5;
+		double d=5.4;
+		float f=4.1f;
+		System.out.println(a);
+		System.out.println(b);
+		System.out.println(c);
+		System.out.println(d);
+//		System.out.println(e);
+		System.out.println(f);
+		
+	}
+
+}

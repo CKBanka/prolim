@@ -1,0 +1,54 @@
+package intface;
+
+class PushNotifier implements Notifier{
+	String appId;
+	String serverKey;
+	public PushNotifier(String appId,String serverKey) {
+		this.appId=appId;
+		this.serverKey=serverKey;
+	}
+	void formatPayload(String message) {
+		System.out.println("Formatted the message");
+	}
+	void connectToPushNotification(String apiid,String apikey) {
+		System.out.println("connected to the push notification gate way");
+	}
+	public void sendNotification(String recipient,String message) {
+		
+	}
+}
+
+
+
+class EmailNotifier implements Notifier{
+	String providerName;
+	String apiKey;
+	public EmailNotifier(String providerName,String apiKey) {
+		this.providerName=providerName;
+		this.apiKey=apiKey;
+	}
+	void formatPayload(String message) {
+		System.out.println("Formatted the message");
+	}
+	void connectToSMSGateway(String message,String apikey) {
+		System.out.println("connected to the sms gate way");
+	}
+	public void sendNotification(String recipient,String message) {
+		formatPayload(message);
+		connectToSMSGateway(recipient,message);
+		System.out.println("Sending message to "+recipient);
+		System.out.println("Provider name is "+ providerName);
+		System.out.println("API Key"+ apiKey);
+		System.out.println("Message is "+message);
+	}
+}
+
+
+public class TestInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,47 @@
+package threading;
+
+class Bank{
+	private int amount;
+	public Bank(int amount) {
+		this.amount=amount;
+	}
+	public synchronized void Debit(int sum,String name) {
+		if(sum<=amount) {
+			System.out.println(sum+" was debitted from "+name);
+			amount=amount-sum;
+			return;
+		}
+		System.out.println(sum+" could not be debitted from "+name);
+	}
+}
+class ATM implements Runnable{
+	private String atmName;
+	private int sum;
+	private Bank b;
+	public ATM(Bank b, String atmName,int sum) {
+		this.atmName=atmName;
+		this.sum=sum;
+		this.b=b;
+	}
+	public void start() {
+		Thread atm = new Thread(this);
+        atm.start();
+	}
+	public void run() {
+		b.Debit(sum,atmName);
+	}
+}
+public class ques3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Bank b=new Bank(1000);
+		ATM a1=new ATM(b,"hdfc atm",600);
+		ATM a2=new ATM(b,"icici atm",300);
+		ATM a3=new ATM(b,"sbi atm",200);
+		a1.start();
+		a2.start();
+		a3.start();
+	}
+
+}

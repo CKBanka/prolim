@@ -1,0 +1,17 @@
+package mywish;
+
+public class typeConvert {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		byte b=125;
+		short a=128;
+		a=b;
+		System.out.println(a);
+		b=125;
+		a=128;
+		b=a;
+		System.out.println(b);
+	}
+
+}

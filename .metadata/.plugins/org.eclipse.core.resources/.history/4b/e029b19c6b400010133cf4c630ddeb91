@@ -1,0 +1,20 @@
+package oops;
+
+public class EmployeeTest {
+
+	public static void main(String[] args) {
+		System.out.println("Employee class details");
+		Employee emp1 = new Employee();
+		emp1.readEmployee();
+		emp1.displayEmployee();
+		
+		System.out.println("Manager class details");
+		Developer d = new Developer();
+		d.readEmployee();
+		d.readDeveloper();	// id, name,salary
+		
+		d.displayEmployee();
+		d.displayDeveloper();
+	}
+
+}

@@ -1,0 +1,28 @@
+package intface;
+
+interface A{
+	int a=5;
+	void disp1();
+}
+interface B{
+	int a=6;
+	void disp2();
+}
+interface C extends A,B{
+	void disp1();
+	void disp3();
+}
+class Check implements A,B,C{
+	public v
+}
+
+
+
+public class TestInterface {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

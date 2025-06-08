@@ -1,0 +1,17 @@
+package intface;
+
+public class PushNotifier {
+
+}
+
+Class PushNotifier implements Notifier{
+	String appId;
+	String serverKey;
+	public EmailNotifier(String appId,String serverKey) {
+		this.appId=appId;
+		this.serverKey=serverKey;
+	}
+	public void sendNotification(String recipient,String message) {
+		
+	}
+}

@@ -1,0 +1,163 @@
+package threading;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+// Clock class that implements Runnable for threading
+class DigitalClock implements Runnable {
+    private boolean running;
+    private DateTimeFormatter formatter;
+    private String clockName;
+    
+    // Constructor
+    public DigitalClock(String name) {
+        this.clockName = name;
+        this.running = false;
+        this.formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    }
+    
+    // Start the clock
+    public void start() {
+        this.running = true;
+        Thread clockThread = new Thread(this);
+        clockThread.start();
+    }
+    
+    // Stop the clock
+    public void stop() {
+        this.running = false;
+    }
+    
+    // Get current status
+    public boolean isRunning() {
+        return running;
+    }
+    
+    // Set custom time format
+    public void setTimeFormat(String pattern) {
+        this.formatter = DateTimeFormatter.ofPattern(pattern);
+    }
+    
+    // Get current time as formatted string
+    public String getCurrentTime() {
+        return LocalTime.now().format(formatter);
+    }
+    
+    // Thread execution method
+    @Override
+    public void run() {
+        System.out.println(clockName + " started!");
+        System.out.println("Clock is running... (Press Ctrl+C to stop)");
+        System.out.println("==========================================");
+        
+        while (running) {
+            try {
+                // Clear previous line and display current time
+                System.out.print("\r" + clockName + ": " + getCurrentTime());
+                
+                // Sleep for 1 second
+                Thread.sleep(1000);
+                
+            } catch (InterruptedException e) {
+                System.out.println("\n" + clockName + " was interrupted!");
+                running = false;
+                break;
+            }
+        }
+        System.out.println("\n" + clockName + " stopped!");
+    }
+}
+
+// Clock Manager class to handle multiple clocks
+class ClockManager {
+    private DigitalClock[] clocks;
+    private int clockCount;
+    
+    public ClockManager(int maxClocks) {
+        this.clocks = new DigitalClock[maxClocks];
+        this.clockCount = 0;
+    }
+    
+    // Add a new clock
+    public void addClock(String name) {
+        if (clockCount < clocks.length) {
+            clocks[clockCount] = new DigitalClock(name);
+            clockCount++;
+            System.out.println("Clock '" + name + "' added successfully!");
+        } else {
+            System.out.println("Maximum clock limit reached!");
+        }
+    }
+    
+    // Start all clocks
+    public void startAllClocks() {
+        for (int i = 0; i < clockCount; i++) {
+            if (clocks[i] != null && !clocks[i].isRunning()) {
+                clocks[i].start();
+            }
+        }
+    }
+    
+    // Stop all clocks
+    public void stopAllClocks() {
+        for (int i = 0; i < clockCount; i++) {
+            if (clocks[i] != null && clocks[i].isRunning()) {
+                clocks[i].stop();
+            }
+        }
+    }
+    
+    // Get clock count
+    public int getClockCount() {
+        return clockCount;
+    }
+}
+
+
+
+public class ques2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+DigitalClock mainClock = new DigitalClock("Main Digital Clock");
+        
+        // Demonstrate different time formats
+        System.out.println("=== Digital Clock Demo ===");
+        System.out.println("Current time: " + mainClock.getCurrentTime());
+        
+        // Change format to include AM/PM
+        mainClock.setTimeFormat("hh:mm:ss a");
+        System.out.println("12-hour format: " + mainClock.getCurrentTime());
+        
+        // Reset to 24-hour format
+        mainClock.setTimeFormat("HH:mm:ss");
+        
+        // Start the clock thread
+        mainClock.start();
+        
+        // Let it run for 10 seconds, then demonstrate clock manager
+        try {
+            Thread.sleep(10000);
+            mainClock.stop();
+            
+            System.out.println("\n\n=== Clock Manager Demo ===");
+            
+            // Demonstrate Clock Manager with multiple clocks
+            ClockManager manager = new ClockManager(3);
+            manager.addClock("Office Clock");
+            manager.addClock("Home Clock");
+            manager.addClock("Server Clock");
+            
+            System.out.println("Total clocks managed: " + manager.getClockCount());
+            
+            // Note: In a real application, you would start the manager clocks
+            // but for demo purposes, we'll just show the structure
+            System.out.println("Clock management system ready!");
+            
+        } catch (InterruptedException e) {
+            System.out.println("Demo interrupted!");
+        }
+
+	}
+
+}

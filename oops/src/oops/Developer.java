@@ -1,0 +1,16 @@
+package oops;
+import java.util.*;
+
+public class Developer extends Employee{
+private String role;
+
+public void readDeveloper() {
+	Scanner sc=new Scanner(System.in);
+	System.out.println("Enter the role of the developer");
+	role = sc.next();
+	sc.close();
+}
+public void displayDeveloper() {
+	System.out.println("Developers role in the company is "+role);
+}
+}
