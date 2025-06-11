@@ -5,7 +5,7 @@ import bankapp.util.*;
 
 public class Account extends BankAccount implements Transaction {
     private double balance;
-    private final String BANK_NAME = "Java National Bank";
+    private final String BANK_NAME = "Young Dragon Bank";
     private static int accountCount = 0;
     
     public Account(String accountNumber, String accountHolderName, double initialBalance) {

@@ -1,40 +1,34 @@
 package bankapp.service;
 
+import java.util.ArrayList;
+
 import bankapp.model.Account;
 
 public class AccountManager {
-    private Account[] accounts;
-    private int accountIndex;
-    private final int MAX_ACCOUNTS = 100;
+    private ArrayList<Account> accounts;
     
     public AccountManager() {
-        accounts = new Account[MAX_ACCOUNTS];
-        accountIndex = 0;
+        accounts = new ArrayList<>();
     }
     
     public void addAccount(String accountNumber, String accountHolderName, double initialBalance) {
-        if (accountIndex < MAX_ACCOUNTS) {
-            // Check if account number already exists
-            for (int i = 0; i < accountIndex; i++) {
-                if (accounts[i].getAccountNumber().equals(accountNumber)) {
-                    System.out.println("Account number already exists!");
-                    return;
-                }
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                System.out.println("Account number already exists");
+                return;
             }
-            
-            accounts[accountIndex] = new Account(accountNumber, accountHolderName, initialBalance);
-            System.out.println("Account created successfully!");
-            accounts[accountIndex].displayAccountDetails();
-            accountIndex++;
-        } else {
-            System.out.println("Maximum account limit reached!");
         }
+        
+        Account newAccount = new Account(accountNumber, accountHolderName, initialBalance);
+        accounts.add(newAccount);
+        System.out.println("Account created successfully");
+        newAccount.displayAccountDetails();
     }
     
     public Account findAccount(String accountNumber) {
-        for (int i = 0; i < accountIndex; i++) {
-            if (accounts[i].getAccountNumber().equals(accountNumber)) {
-                return accounts[i];
+        for (Account account : accounts) {
+            if (account.getAccountNumber().equals(accountNumber)) {
+                return account;
             }
         }
         return null;
@@ -87,14 +81,50 @@ public class AccountManager {
     }
     
     public void displayAllAccounts() {
-        if (accountIndex == 0) {
+        if (accounts.isEmpty()) {
             System.out.println("No accounts found!");
             return;
         }
         
         System.out.println("\n=== All Accounts ===");
-        for (int i = 0; i < accountIndex; i++) {
-            accounts[i].displayAccountDetails();
+        for (Account account : accounts) {
+            account.displayAccountDetails();
         }
+    }
+    
+    public void removeAccount(String accountNumber) {
+        Account accountToRemove = findAccount(accountNumber);
+        if (accountToRemove != null) {
+            accounts.remove(accountToRemove);
+            System.out.println("Account " + accountNumber + " removed successfully!");
+        } else {
+            System.out.println("Account not found!");
+        }
+    }
+    
+    public void listAccountsByBalance(double minBalance) {
+        System.out.println("\n=== Accounts with balance >= $" + minBalance + " ===");
+        boolean found = false;
+        for (Account account : accounts) {
+            if (account.getBalance() >= minBalance) {
+                account.displayAccountDetails();
+                found = true;
+            }
+        }
+        if (!found) {
+            System.out.println("No accounts found with balance >= $" + minBalance);
+        }
+    }
+    
+    public int getTotalAccounts() {
+        return accounts.size();
+    }
+    
+    public double getTotalBankBalance() {
+        double total = 0.0;
+        for (Account account : accounts) {
+            total += account.getBalance();
+        }
+        return total;
     }
 }

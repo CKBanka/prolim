@@ -22,7 +22,6 @@ public class Main {
             System.out.println("5. Calculate Interest");
             System.out.println("6. Get Account Count");
             System.out.println("7. Get Balance");
-            System.out.println("8. Display All Accounts");
             System.out.println("0. Exit");
             System.out.print("Enter your choice: ");
             
